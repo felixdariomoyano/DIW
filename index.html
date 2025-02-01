@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <title>Tarea 5 - DIW</title>
+    </head>
+    <body>
+        <!-- Círculo alrededor del cursor -->
+        <div id="cursor" class="cursor"></div>
+        <header>
+            <h1>ACCESIBILIDAD EN LA WEB</h1>
+	    </header>
+        <article>
+            <section class="video-audiodescripcion-container"></div>
+                <section class="video-container">
+                        <h2>Gladiator</h2>
+                        <!-- Video -->
+                        <video id="video" width="640" height="360" controls>
+                            <source src="media/gladiator.mp4" type="video/mp4">
+                            <source src="media/gladiator.webm" type="video/webm">
+                            <source src="media/gladiator.ogv" type="video/ogv">
+                            <p>Tu navegador no soporta el elemento de vídeo.</p>
+                            <track src="media/subtitulos.vtt" kind="subtitles" srclang="es" label="Español">
+                        </video>
+                </section>    
+                <section class="audiodescripcion-container">
+                    <!-- Audiodescripción -->
+                    <button id="activarAudiodescripcion" class="btn">Activar Audiodescripción</button>
+                    <audio id="audiodescripcion" src="media/gladiator.mp3" preload="auto"></audio>
+                    <!-- Texto de audiodescripción -->
+                    <div id="audiodescripcionText" class="audiodescripcion-text">
+                        <p id="frase1" data-time="0.000">FÉLIX DARIO MOYANO ROMERO,</p>
+                        <p id="frase2" data-time="12.660">¡Atres!</p>
+                        <p id="frase3" data-time="17.180">Dentro de 3 semanas, yo estaré recogiendo mis cosechas</p>
+                        <p id="frase4" data-time="21.400">Imaginad dónde querréis estar</p>
+                        <p id="frase5" data-time="24.580">Y ¡se hará realidad!</p>
+                        <p id="frase6" data-time="26.540">¡Manteneos firmes! No os separéis de mí</p>
+                        <p id="frase7" data-time="30.360">Si os véis cabalgando sólos</p>
+                        <p id="frase8" data-time="32.920">Por verdes prados, el rostro bañado por el Sol</p>
+                        <p id="frase9" data-time="37.140">¡Que no os cause temor!</p>
+                        <p id="frase10" data-time="40.140">Estaréis en el Elíseo</p>
+                        <p id="frase11" data-time="42.320">Y ya ¡habréis muerto!</p>
+                        <p id="frase12" data-time="45.980">¡Hermanos!</p>
+                        <p id="frase13" data-time="49.140">Lo que hacemos en la vida</p>
+                        <p id="frase14" data-time="51.620">Tiene su eco en la eternidad</p>
+                    </div>
+                </section>
+            </section>
+        </article>
+        <footer>
+            <h3>Página creada por: FÉLIX DARÍO MOYANO ROMERO</h3>
+        </footer>
+        <script>
+            // Obtener el div que actuará como cursor
+            const cursor = document.getElementById('cursor');
+            
+            // Función para actualizar la posición del cursor
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                // Actualiza la posición del div para que siga el cursor
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            });
+
+            // Obtener elementos de vídeo y audio
+            const video = document.getElementById('video');
+            const audiodescripcion = document.getElementById('audiodescripcion');
+            const botonAudiodescripcion = document.getElementById('activarAudiodescripcion');
+            const audiodescripcionText = document.getElementById('audiodescripcionText');
+            const frases = audiodescripcionText.getElementsByTagName('p');
+
+            let audiodescripcionActiva = false;
+
+            // Función para activar/desactivar la audiodescripción
+            botonAudiodescripcion.addEventListener('click', () => {
+                audiodescripcionActiva = !audiodescripcionActiva;
+
+                if (audiodescripcionActiva) {
+                    // Sincronizar el inicio del audio con el vídeo
+                    audiodescripcion.currentTime = video.currentTime;
+                    // Reproducir la audiodescripción
+                    audiodescripcion.play().catch((error) => {
+                        console.error("Error al reproducir la audiodescripción:", error);
+                    });
+                    botonAudiodescripcion.textContent = "Desactivar Audiodescripción";
+                } else {
+                    audiodescripcion.pause();
+                    botonAudiodescripcion.textContent = "Activar Audiodescripción";
+                }
+            });
+
+            // Sincronización del texto con el audio
+            audiodescripcion.addEventListener('timeupdate', () => {
+                if (audiodescripcionActiva) {
+                    // Obtener el tiempo actual del audio
+                    const tiempoActual = audiodescripcion.currentTime;
+
+                    // Resaltar la frase correspondiente
+                    for (let i = 0; i < frases.length; i++) {
+                        const frase = frases[i];
+                        const tiempoFrase = parseFloat(frase.getAttribute('data-time'));
+
+                        // Si el tiempo actual coincide con el tiempo de la frase, resaltar la frase
+                        if (tiempoActual >= tiempoFrase && tiempoActual < (tiempoFrase + 2)) {
+                            frase.style.backgroundColor = '#FFFF00';  // Color de fondo amarillo
+                        } else {
+                            frase.style.backgroundColor = '';  // Quitar el color de fondo
+                        }
+                    }
+                }
+            });
+
+            // Función para saltar a una frase seleccionada
+            Array.from(frases).forEach((frase) => {
+                frase.addEventListener('click', () => {
+                    const tiempoFrase = parseFloat(frase.getAttribute('data-time'));
+
+                    // Reproducir la audiodescripción desde la frase seleccionada
+                    audiodescripcion.currentTime = tiempoFrase;
+                    audiodescripcion.play();
+                    video.currentTime = tiempoFrase; // Sincronizar vídeo con la frase seleccionada
+                });
+            });
+
+            // Sincronización del video con la audiodescripción
+            video.addEventListener('play', () => {
+                if (audiodescripcionActiva && audiodescripcion.paused) {
+                    audiodescripcion.currentTime = video.currentTime;
+                    audiodescripcion.play();
+                }
+            });
+
+            video.addEventListener('pause', () => {
+                if (audiodescripcionActiva) {
+                    audiodescripcion.pause();
+                }
+            });
+
+            video.addEventListener('ended', () => {
+                if (audiodescripcionActiva) {
+                    audiodescripcion.pause();
+                    audiodescripcion.currentTime = 0;
+                }
+            });
+        </script>
+    </body>
+</html>

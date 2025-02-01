@@ -1,0 +1,167 @@
+/* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Contenedor del encabezado */
+header {
+    height: 10vh;
+    background-color: #0056b3;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+/* Cuerpo principal: Flexbox para centrar el contenido */
+article {
+    padding: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-grow: 1;
+    text-align: center;
+    overflow-y: auto;
+}
+
+/* Estilos para el pie de página */
+footer {
+    height: 6vh;
+    background-color: #333333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Círculo amarillo alrededor del cursor */
+.cursor {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: yellow;
+    border: 3px solid #333333;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+    z-index: 9999;
+}
+
+/* Centrado del título h2 */
+section h2 {
+    font-size: 2em;
+    margin-bottom: 15px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+/* Añadir estilos de foco visible para accesibilidad */
+button:focus, a:focus, video:focus {
+    outline: 2px solid #FF0000;
+    outline-offset: 2px;
+}
+
+/* Tamaño del texto */
+h1, h2, p, footer h3 {
+    font-size: 2em;
+}
+
+/* Mejorar contraste de los subtítulos */
+track {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+/* Espaciado del video y sus controles visibles */
+video {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Contenedor principal para el video y la audiodescripción */
+.video-audiodescripcion-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start; 
+    gap: 20px;
+    width: 90%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+}
+
+/* Contenedor del video */
+.video-container {
+    flex: 1; 
+    max-width: 640px; 
+}
+
+/* Contenedor de la audiodescripción */
+.audiodescripcion-container {
+    flex: 1; 
+    max-width: 400px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilos para el texto de la audiodescripción */
+.audiodescripcion-text {
+    margin-top: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.audiodescripcion-text p {
+    margin: 10px 0;
+    font-size: 1.4em;
+    cursor: pointer;
+}
+
+.audiodescripcion-text p:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilo del botón de Audiodescripción */
+button.btn {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Estilo del botón cuando se pasa el ratón por encima */
+button.btn:hover {
+    background-color: #003366;
+}
